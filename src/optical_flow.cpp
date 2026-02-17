@@ -230,15 +230,15 @@ static void flow_task(void *parameter) {
                             if (fabsf(vel_y_body) > 200.0f) vel_y_body = 0.0f;
 
                             // Rotation body → world frame (yaw)
-                            float yaw_rad = yaw_deg * 0.01745329f;
+                            /*float yaw_rad = yaw_deg * 0.01745329f;
                             float cos_yaw = cosf(yaw_rad);
                             float sin_yaw = sinf(yaw_rad);
                             float vel_x_world = vel_x_body * cos_yaw - vel_y_body * sin_yaw;
                             float vel_y_world = vel_x_body * sin_yaw + vel_y_body * cos_yaw;
-
+                            */
                             // Filtre passe-bas
-                            filt_vel_x = filt_vel_x + ALPHA * (vel_x_world - filt_vel_x);
-                            filt_vel_y = filt_vel_y + ALPHA * (vel_y_world - filt_vel_y);
+                            filt_vel_x = filt_vel_x + ALPHA * (vel_x_body - filt_vel_x);
+                            filt_vel_y = filt_vel_y + ALPHA * (vel_y_body - filt_vel_y);
 
                             // Intégration de position (seulement si qualité suffisante)
                             if (quality >= FLOW_QUALITY_MIN) {
