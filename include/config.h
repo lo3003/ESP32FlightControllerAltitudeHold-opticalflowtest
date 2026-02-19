@@ -84,7 +84,7 @@
 #define PID_P_POS           0.3f
 #define PID_I_POS           0.0f
 #define PID_D_POS           0.5f
-#define PID_MAX_POS_ANGLE   12.0f   // Angle max commandé par le position hold (degrés)
+#define PID_MAX_POS_ANGLE   7.0f   // Angle max commandé par le position hold (degrés)
 #define POS_SMOOTH_DEFAULT  0.02f
 #define PIN_AUX2_CHANNEL    6       // Canal SBUS du switch AUX2
 

@@ -413,8 +413,8 @@ void pid_compute_position(DroneState *drone) {
     float vy = drone->flow_velocity_y;
     if (fabsf(vx) < 1.0f) vx = 0.0f;
     if (fabsf(vy) < 1.0f) vy = 0.0f;
-    float dx = -drone->d_pos * (vx / 100.0f);
-    float dy = -drone->d_pos * (vy / 100.0f);
+    float dx = -drone->d_pos * vx;
+    float dy = -drone->d_pos * vy;
 
     // Somme + saturation
     float out_x = px + pid_i_mem_pos_x + dx;

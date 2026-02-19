@@ -88,7 +88,7 @@ static void flow_task(void *parameter) {
     // Timing
     unsigned long last_frame_us = micros();
 
-    const float ALPHA = 0.2f;  // Filtre passe-bas coefficient
+    const float ALPHA = 0.5f;  // Filtre passe-bas coefficient
 
     TickType_t xLastWake = xTaskGetTickCount();
 
@@ -241,9 +241,18 @@ static void flow_task(void *parameter) {
                             filt_vel_y = filt_vel_y + ALPHA * (vel_y_body - filt_vel_y);
 
                             // Intégration de position (seulement si qualité suffisante)
-                            if (quality >= FLOW_QUALITY_MIN) {
+                            /*if (quality >= FLOW_QUALITY_MIN) {
                                 pos_x_int += filt_vel_x * dt_s;
                                 pos_y_int += filt_vel_y * dt_s;
+                            }
+                            */
+                            // Intégration de position (seulement si qualité suffisante)
+                            if (quality >= FLOW_QUALITY_MIN) {
+                                // Deadband vélocité : ne pas intégrer les petites vitesses résiduelles
+                                float int_vx = (fabsf(filt_vel_x) > 2.0f) ? filt_vel_x : 0.0f;
+                                float int_vy = (fabsf(filt_vel_y) > 2.0f) ? filt_vel_y : 0.0f;
+                                pos_x_int += int_vx * dt_s;
+                                pos_y_int += int_vy * dt_s;
                             }
 
                             // Publication thread-safe
